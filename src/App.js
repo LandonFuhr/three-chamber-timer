@@ -1,23 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Layout, Row, Col, Divider } from "antd";
+import { Chamber } from "./components/Chamber";
+import { Timer } from "./components/Timer";
+import { Header } from "./components/Header";
+import { useThreeChamberController } from "./controllers/useThreeChamberController";
+import { PlayPauseButton } from "./components/PlayPauseButton";
+import { ResultsTable } from "./components/ResultsTable";
 
 function App() {
+  const { stopwatches, handlePlayPause } = useThreeChamberController();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Layout style={{ height: "100%" }}>
+        <Header />
+        <Layout.Content
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "100px",
+            padding: "50px",
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <Row justify="center" gutter={{ xs: 8, sm: 16, md: 24 }}>
+            <Chamber
+              chamberStopwatch={stopwatches.chambers.left}
+              title="Left Chamber"
+              cageStopwatch={stopwatches.cages.left}
+            />
+            <Chamber
+              title="Middle Chamber"
+              chamberStopwatch={stopwatches.chambers.middle}
+            />
+            <Chamber
+              title="Right Chamber"
+              chamberStopwatch={stopwatches.chambers.right}
+              cageStopwatch={stopwatches.cages.right}
+            />
+          </Row>
+          <Row justify="center" gutter={{ xs: 8, sm: 16, md: 24 }}>
+            <Col
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <PlayPauseButton
+                isPaused={
+                  stopwatches.overall.isFrozen || !stopwatches.overall.isRunning
+                }
+                onClick={handlePlayPause}
+              />
+              <Timer
+                timeInMs={stopwatches.overall.elapsedTimeInMs}
+                isSelected={stopwatches.overall.isRunning}
+                isCounting={stopwatches.overall.isCounting}
+              />
+            </Col>
+          </Row>
+          <Divider />
+          <ResultsTable stopwatches={stopwatches} />
+        </Layout.Content>
+      </Layout>
     </div>
   );
 }
