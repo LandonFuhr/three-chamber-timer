@@ -3,3 +3,7 @@
 .App {
   height: 100%;
 }
+
+.ant-table-pagination {
+  display: none;
+}

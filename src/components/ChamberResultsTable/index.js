@@ -1,0 +1,1 @@
+export { ChamberResultsTable } from "./ChamberResultsTable";
