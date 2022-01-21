@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 export function useStopwatchOrchestrator({
   globalStopwatch,
   singleSelectStopwatches,
+  countingIds,
 }) {
+  const currSingleStopwatchRef = useRef();
+
   const allStopwatches = useMemo(
     () => [globalStopwatch, ...singleSelectStopwatches],
     [globalStopwatch, singleSelectStopwatches]
@@ -21,9 +24,18 @@ export function useStopwatchOrchestrator({
           .forEach((stopwatch) => {
             stopwatch.stopRunning();
           });
+        const prevActiveStopwatchId = currSingleStopwatchRef.current;
+        const shouldCountSwitch =
+          prevActiveStopwatchId !== toggledStopwatchId &&
+          countingIds.includes(prevActiveStopwatchId) &&
+          countingIds.includes(toggledStopwatchId);
+        if (shouldCountSwitch) {
+          toggledStopwatch.incrementNStarts();
+        }
+        currSingleStopwatchRef.current = toggledStopwatchId;
       }
     },
-    [singleSelectStopwatches]
+    [singleSelectStopwatches, countingIds, currSingleStopwatchRef]
   );
 
   useEffect(() => {

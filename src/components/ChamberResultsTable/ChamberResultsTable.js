@@ -9,12 +9,14 @@ function getChamberData(stopwatches, region) {
   const totalElapsedTime =
     chamberStopwatch.elapsedTimeInMs +
     (cageStopwatch ? cageStopwatch.elapsedTimeInMs : 0);
+  const nEntries =
+    chamberStopwatch.nStarts - (cageStopwatch ? cageStopwatch.nStarts : 0);
 
   return {
     key: chamberStopwatch.id,
     name: prettifySnakeCase(chamberStopwatch.id),
     elapsedTime: formatTimeFromMs(totalElapsedTime),
-    nEntries: 0,
+    nEntries,
   };
 }
 

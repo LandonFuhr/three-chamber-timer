@@ -1,13 +1,22 @@
 import { useStopwatch } from "./useStopwatch";
 import { useStopwatchOrchestrator } from "./useStopwatchOrchestrator";
 
+const STOPWATCH_IDS = Object.freeze({
+  OVERALL: "overall",
+  LEFT_CAGE: "left_cage",
+  RIGHT_CAGE: "right_cage",
+  LEFT_CHAMBER: "left_chamber",
+  MIDDLE_CHAMBER: "middle_chamber",
+  RIGHT_CHAMBER: "right_chamber",
+});
+
 export function useThreeChamberController() {
-  const leftCageStopwatch = useStopwatch("left_cage");
-  const rightCageStopwatch = useStopwatch("right_cage");
-  const overallStopwatch = useStopwatch("overall");
-  const leftChamberStopwatch = useStopwatch("left_chamber");
-  const middleChamberStopwatch = useStopwatch("middle_chamber");
-  const rightChamberStopwatch = useStopwatch("right_chamber");
+  const overallStopwatch = useStopwatch(STOPWATCH_IDS.OVERALL);
+  const leftCageStopwatch = useStopwatch(STOPWATCH_IDS.LEFT_CAGE);
+  const rightCageStopwatch = useStopwatch(STOPWATCH_IDS.RIGHT_CAGE);
+  const leftChamberStopwatch = useStopwatch(STOPWATCH_IDS.LEFT_CHAMBER);
+  const middleChamberStopwatch = useStopwatch(STOPWATCH_IDS.MIDDLE_CHAMBER);
+  const rightChamberStopwatch = useStopwatch(STOPWATCH_IDS.RIGHT_CHAMBER);
 
   const orchestrator = useStopwatchOrchestrator({
     globalStopwatch: overallStopwatch,
@@ -17,6 +26,11 @@ export function useThreeChamberController() {
       rightChamberStopwatch,
       leftCageStopwatch,
       rightCageStopwatch,
+    ],
+    countingIds: [
+      STOPWATCH_IDS.LEFT_CHAMBER,
+      STOPWATCH_IDS.MIDDLE_CHAMBER,
+      STOPWATCH_IDS.RIGHT_CHAMBER,
     ],
   });
 

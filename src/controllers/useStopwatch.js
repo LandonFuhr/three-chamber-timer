@@ -6,6 +6,7 @@ export function useStopwatch(stopwatchId) {
   const [isFrozen, setIsFrozen] = useState(true);
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTimeInMs, setElapsedTimeInMs] = useState(0);
+  const [nStarts, setNStarts] = useState(0);
   const onToggleCallback = useRef(null);
 
   const onToggle = useCallback(
@@ -48,6 +49,10 @@ export function useStopwatch(stopwatchId) {
     }
   }, [onToggleCallback, stopwatchId]);
 
+  const incrementNStarts = useCallback(() => {
+    setNStarts((currNStarts) => currNStarts + 1);
+  }, []);
+
   const unfreeze = useCallback(() => {
     setIsFrozen(false);
   }, []);
@@ -67,6 +72,8 @@ export function useStopwatch(stopwatchId) {
     isFrozen,
     isCounting,
     elapsedTimeInMs,
+    nStarts,
+    incrementNStarts,
     startRunning,
     stopRunning,
     toggleIsRunning,
