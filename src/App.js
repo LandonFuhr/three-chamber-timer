@@ -7,9 +7,11 @@ import { useThreeChamberController } from "./controllers/useThreeChamberControll
 import { PlayPauseButton } from "./components/PlayPauseButton";
 import { ChamberResultsTable } from "./components/ChamberResultsTable";
 import { CageResultsTable } from "./components/CageResultsTable";
+import { useSpaceShortcut } from "./controllers/useSpaceShortcut";
 
 function App() {
   const { stopwatches, handlePlayPause } = useThreeChamberController();
+  useSpaceShortcut(handlePlayPause);
 
   return (
     <div className="App">
