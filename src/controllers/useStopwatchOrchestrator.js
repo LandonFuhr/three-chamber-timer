@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 export function useStopwatchOrchestrator({
   globalStopwatch,
   singleSelectStopwatches,
-  countingIds,
+  countingIdMap,
 }) {
   const currSingleStopwatchRef = useRef();
 
@@ -27,15 +27,14 @@ export function useStopwatchOrchestrator({
         const prevActiveStopwatchId = currSingleStopwatchRef.current;
         const shouldCountSwitch =
           prevActiveStopwatchId !== toggledStopwatchId &&
-          countingIds.includes(prevActiveStopwatchId) &&
-          countingIds.includes(toggledStopwatchId);
+          countingIdMap[toggledStopwatchId].includes(prevActiveStopwatchId);
         if (shouldCountSwitch) {
           toggledStopwatch.incrementNStarts();
         }
         currSingleStopwatchRef.current = toggledStopwatchId;
       }
     },
-    [singleSelectStopwatches, countingIds, currSingleStopwatchRef]
+    [singleSelectStopwatches, countingIdMap, currSingleStopwatchRef]
   );
 
   useEffect(() => {

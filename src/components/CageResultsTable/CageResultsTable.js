@@ -9,6 +9,7 @@ function getCageData(stopwatches, region) {
     key: cageStopwatch.id,
     name: prettifySnakeCase(cageStopwatch.id),
     interactionTime: formatTimeFromMs(cageStopwatch.elapsedTimeInMs),
+    nInteractions: cageStopwatch.nStarts,
   };
 }
 
@@ -28,6 +29,11 @@ export const CageResultsTable = ({ stopwatches }) => {
       title: "Interaction Time",
       dataIndex: "interactionTime",
       key: "interactionTime",
+    },
+    {
+      title: "# of Interactions",
+      dataIndex: "nInteractions",
+      key: "nInteractions",
     },
   ];
 

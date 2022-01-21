@@ -9,8 +9,7 @@ function getChamberData(stopwatches, region) {
   const totalElapsedTime =
     chamberStopwatch.elapsedTimeInMs +
     (cageStopwatch ? cageStopwatch.elapsedTimeInMs : 0);
-  const nEntries =
-    chamberStopwatch.nStarts - (cageStopwatch ? cageStopwatch.nStarts : 0);
+  const nEntries = chamberStopwatch.nStarts;
 
   return {
     key: chamberStopwatch.id,

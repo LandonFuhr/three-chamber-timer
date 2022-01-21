@@ -27,11 +27,16 @@ export function useThreeChamberController() {
       leftCageStopwatch,
       rightCageStopwatch,
     ],
-    countingIds: [
-      STOPWATCH_IDS.LEFT_CHAMBER,
-      STOPWATCH_IDS.MIDDLE_CHAMBER,
-      STOPWATCH_IDS.RIGHT_CHAMBER,
-    ],
+    countingIdMap: {
+      [STOPWATCH_IDS.LEFT_CAGE]: [STOPWATCH_IDS.LEFT_CHAMBER],
+      [STOPWATCH_IDS.RIGHT_CAGE]: [STOPWATCH_IDS.RIGHT_CHAMBER],
+      [STOPWATCH_IDS.LEFT_CHAMBER]: [STOPWATCH_IDS.MIDDLE_CHAMBER],
+      [STOPWATCH_IDS.MIDDLE_CHAMBER]: [
+        STOPWATCH_IDS.LEFT_CHAMBER,
+        STOPWATCH_IDS.RIGHT_CHAMBER,
+      ],
+      [STOPWATCH_IDS.RIGHT_CHAMBER]: [STOPWATCH_IDS.MIDDLE_CHAMBER],
+    },
   });
 
   return {
